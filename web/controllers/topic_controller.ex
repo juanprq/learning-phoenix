@@ -20,7 +20,7 @@ defmodule Discuss.TopicController do
   def create(conn, %{"topic" => topic}) do
     changeset = Discuss.Topic.changeset(%Topic{}, topic)
     case Repo.insert(changeset) do
-      {:ok, topic} ->
+      {:ok, _topic} ->
         conn
         |> put_flash(:info, "Topic created")
         |> redirect(to: topic_path(conn, :index))
@@ -47,6 +47,20 @@ defmodule Discuss.TopicController do
         |> redirect(to: topic_path(conn, :index))
       {:error, changeset} ->
         render(conn, "edit.html", changeset: changeset, topic: old_topic)
+    end
+  end
+
+  def delete(conn, %{"id" => topic_id}) do
+    topic = Repo.get(Topic, topic_id)
+    case Repo.delete(topic) do
+      {:ok, _} ->
+        conn
+        |> put_flash(:info, "Topic deleted")
+        |> redirect(to: topic_path(conn, :index))
+      {:error, _} ->
+        conn
+        |> put_flash(:error, "An error ocurred trying to delete the topic")
+        |> redirect(to: topic_path(conn, :index))
     end
   end
 end
