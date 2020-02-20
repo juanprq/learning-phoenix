@@ -44,6 +44,7 @@ defmodule Discuss.Mixfile do
       {:plug_cowboy, "~> 1.0"},
       {:ueberauth, "~> 0.3"},
       {:ueberauth_github, "~> 0.4"},
+      {:jason, "~> 1.1"}
     ]
   end
 
