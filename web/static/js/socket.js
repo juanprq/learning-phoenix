@@ -24,7 +24,11 @@ const createSocket = topicId => {
   });
 };
 
-const renderComment = ({ content }) => `<li class="collection-item">${content}</li>`;
+const renderComment = ({ content, user }) => `
+  <li class="collection-item">
+    ${content}
+    <div class="secondary-content">${user ? user.email : 'Anonymous'}</div>
+  </li>`;
 
 const renderComments = comments =>
   comments.map(renderComment) ;
