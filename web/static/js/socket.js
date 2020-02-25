@@ -17,9 +17,16 @@ const createSocket = topicId => {
 
     channel.push('comment:add', { content });
   });
+
+  channel.on(`comments:${topicId}:new`, ({ comment }) => {
+    const item = renderComment(comment);
+    document.getElementById('comments').innerHTML += item;
+  });
 };
 
-const renderComments = comments => 
-  comments.map(comment => (`<li class="collection-item">${comment.content}</li>`)) ;
+const renderComment = ({ content }) => `<li class="collection-item">${content}</li>`;
+
+const renderComments = comments =>
+  comments.map(renderComment) ;
 
 window.createSocket = createSocket;
